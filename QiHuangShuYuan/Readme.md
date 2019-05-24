@@ -1,7 +1,5 @@
 # 岐黄国医研究室
 
-- 爬医案
-
-http://www.xlgyyjs.com/keyan/Index.html
-
-http://www.xlgyyjs.com/Medicalrecords/Index.html
+1. 爬医案  
+    [科研](http://www.xlgyyjs.com/keyan/Index.html)  
+    [医案](http://www.xlgyyjs.com/Medicalrecords/Index.html)  
