@@ -11,13 +11,19 @@ def query_data(url):
     try:
         with urllib.request.urlopen(url) as response:
             data = response.read()
-            try:
-                return data.decode('utf8')
-            except:
-                return data
+            return data.decode('utf8')
     except Exception as e:
         print('exception in url ****', e, url)
         return ""
+
+def download_file(url, file_name):
+    try:
+        with urllib.request.urlopen(url) as response:
+            data = response.read()
+            with open(file_name, "wb+") as content_file:
+                content_file.write(data)
+    except Exception as e:
+        print('exception download_file url ****', e, url)
 
 # 医案链接
 def parse_summary(entry, parent_directory):
@@ -61,16 +67,16 @@ def download_detail_pdf(entry, parent_directory):
             url = link['href'].strip()
             if not url.startswith("http"):
                 url = 'http://www.xlgyyjs.com' + url
-            print(url)
 
             text = link.get_text().strip()
             if text.lower().endswith('pdf') or url.lower().endswith('pdf'):
-                with open(os.path.join(entry_directory, text), "w+") as content_file:
-                    data = query_data(url)
-                    if data:
-                        content_file.write(data)
-                    else:
-                        print(text, url)
+                download_file(url, os.path.join(entry_directory, text))
+                # with open(os.path.join(entry_directory, text), "w+") as content_file:
+                #     data = query_data(url)
+                #     if data:
+                #         content_file.write(data)
+                #     else:
+                #         print(text, url)
             else:
                 pass
 
