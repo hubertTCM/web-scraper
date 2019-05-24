@@ -3,6 +3,8 @@ import os
 import urllib.request
 import collections
 
+from bs4 import BeautifulSoup
+
 Entry = collections.namedtuple('Entry', 'name url')
 
 def query_data(url):
@@ -20,7 +22,20 @@ def parse_summary(entry, parent_directory):
     raw_text = query_data(entry.url)
     with open(os.path.join(entry_directory, "content.html"), "w+") as content_file:
         content_file.write(raw_text)
-    pass
+
+    bs = BeautifulSoup(raw_text, 'html.parser')
+    nameList = bs.find_all('div', {'class':'margin_a8'})
+
+    details = []
+    for name in nameList:
+        links = name.find_all('a')
+        for link in links:
+            if not next((x for x in details if x.url == link['href']), None):
+                details.append(Entry(name= link.get_text(), url=link['href']))
+    
+    for item in details:
+        print(item.name)
+        print(item.url)
 
 
 if __name__ == "__main__":

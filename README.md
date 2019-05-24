@@ -9,4 +9,5 @@ virtualenv -p python3 scrapingEnv
 cd scrapingEnv/
 source bin/activate
 pip install beautifulsoup4
+pip3 install lxml
 ```
